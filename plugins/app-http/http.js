@@ -4,7 +4,7 @@ module.exports = function setup(options, imports, register) {
         app = express(),
         http = require('http'),
         server = http.createServer(app),
-        SQLiteStore = require('connect-sqlite')(express),
+        //SQLiteStore = require('connect-sqlite')(express),
         //pam = require('authenticate-pam'),
         //io = require('socket.io').listen(server),
         util = require('util'),
@@ -43,12 +43,14 @@ module.exports = function setup(options, imports, register) {
     app.configure(function() {
         app.use(express.bodyParser());
         app.use(express.cookieParser());
+        /*
         app.use(express.session({
             store: new SQLiteStore({db:'usgDB', dir:'db/'}),
             key:'usgagent.sid',
             secret: sessionSecret,
             cookie: {maxAge:86400 * 7, secure: false, signed: true, httpOnly: true}
         }));
+        */
         app.use(express.csrf());
     });
 
