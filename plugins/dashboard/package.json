@@ -1,0 +1,15 @@
+{
+    "name": "dashboard",
+    "version": "1.0",
+    "main": "dashboard.js",
+    "private": true,
+
+    "plugin": {
+        "consumes": ["http"],
+        "provides": ["dashboard"]
+    },
+
+    "dependencies": {
+        "shelljs": "~0.0.4"
+    }   
+}

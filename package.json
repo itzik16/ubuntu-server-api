@@ -1,0 +1,18 @@
+{
+    "author": "David Feinberg <david@ubuntuservergui.com>",
+    "name": "ubuntu-server-gui",
+    "description": "API to perform Ubuntu Server sys admin tasks via HATEOS or Websockets",
+    "version": "0.0.0",
+    "repository": {
+        "url": "https://github.com/rawberg/ubuntu-server-api"
+    },
+    "engines": {
+        "node": "~0.6.11"
+    },
+    "dependencies": {
+        "architect": "~0.1.0",
+        "architect-http": "~0.0.1"
+    },
+    "devDependencies": {},
+    "optionalDependencies": {}
+}
