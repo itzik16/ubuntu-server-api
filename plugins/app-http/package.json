@@ -9,7 +9,8 @@
     },
 
     "dependencies": {
-        "sqlite3": "~2.1.5",
+        "sqlite3": "~0.0.0",
+        "connect-sqlite3": "~0.0.0",
         "express": "~3.0.0"
     }   
 }
