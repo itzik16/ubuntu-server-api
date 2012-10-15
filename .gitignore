@@ -2,6 +2,7 @@
 bin-debug/
 bin-release/
 
+db/
 node_modules/
 npm-debug.log
 

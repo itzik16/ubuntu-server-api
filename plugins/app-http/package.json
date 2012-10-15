@@ -1,16 +1,17 @@
 {
     "name": "app-http",
-    "version": "1.0",
+    "version": "1.0.0",
     "main": "http.js",
     "private": true,
 
     "plugin": {
-        "provides": ["http"]
+        "provides": ["http", "socket_io", "express", "ensureAuth"]
     },
 
     "dependencies": {
-        "sqlite3": "~0.0.0",
-        "connect-sqlite3": "~0.0.0",
-        "express": "~3.0.0"
-    }   
+        "socket.io": "0.9.x",
+        "sqlite3": ">0.0.0",
+        "connect-sqlite3": "0.9.x",
+        "express": "3.0.x"
+    }
 }
