@@ -13,3 +13,7 @@ Install Notes
 
 Tests
 - tests use Mocha and can be run from the root directory via make test
+=======
+Notes
+- need to install architect and connect-architect from git to resolve architect.log dependency
+- remove static imports from plugins/smith.io/smith-transport-server.js
