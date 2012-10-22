@@ -18,6 +18,10 @@ Early version of the app I'm releasing to get developer feedback. It has the bas
 - written with [Mocha](http://visionmedia.github.com/mocha/) and [Should](https://github.com/visionmedia/should.js/)
 - run them from the root directory via `make test`
 
+### Documentation
+- for now the tests and source code are the best documentation
+- pretty documentation is coming soon
+
 ### License
 [AGPL 3.0](http://opensource.org/licenses/AGPL-3.0)
 
