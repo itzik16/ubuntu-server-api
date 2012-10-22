@@ -5,7 +5,7 @@
     "private": true,
 
     "plugin": {
-        "consumes": ["http"],
+        "consumes": ["express", "http", "socket_io", "ensureAuth"],
         "provides": ["dashboard"]
     },
 

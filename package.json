@@ -2,7 +2,7 @@
     "author": "David Feinberg <david@ubuntuservergui.com>",
     "name": "ubuntu-server-gui",
     "description": "API to perform Ubuntu Server sys admin tasks via HATEOS or Websockets",
-    "version": "0.0.6",
+    "version": "0.6.0",
     "repository": {
         "type": "git",
         "url": "git://github.com:rawberg/ubuntu-server-api.git"
@@ -13,20 +13,23 @@
     },
 
     "dependencies": {
-        "architect": "~0.1.0",
-        "express": ">=3.0.x",
-        "connect-sqlite3": ">=0.9.1"
+        "architect": "0.1.x",
+        "connect": ">0.0.0",
+        "express": "3.0.x",
+        "socket.io": "0.9.x",
+        "connect-sqlite3": ">=0.9.1",
+        "authenticate-pam": "0.1.x"
     },
 
     "devDependencies": {
         "mocha": ">0.0.0",
         "should": ">0.0.0",
-        "grunt": ">0.0.0",
-        "coffee-script": ">0.0.0"
+        "socket.io-client": ">0.0.0",
+        "request": "2.11.x"
     },
 
     "licenses": [{
-        "type": "GPL v3",
-        "url": ""
+        "type": "AGPL",
+        "url": "http://www.gnu.org/licenses/agpl-3.0.html"
     }]    
 }

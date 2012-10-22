@@ -7,4 +7,9 @@ var configPath = path.join(__dirname, "config.js"),
 architect.createApp(config, function (err, app) {
   if (err) throw err;
   console.log("app started");
+  
+  // Used for testsuite forking
+  if (process.send) {
+    process.send('listening');
+  }
 });

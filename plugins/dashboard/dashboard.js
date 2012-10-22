@@ -2,8 +2,12 @@ module.exports = function setup(options, imports, register) {
     
     var os = require('os'),
         util = require('util'),
-        shell = require('shelljs'),
-        http = imports.http;
+        shell = require('shelljs');
+
+    var express = imports.express,
+        io = imports.socket_io,
+        sessionSockets = imports.sessionSockets,
+        ensureAuth = imports.ensureAuth;
 
     function cpuStats() {
         var coreCount = os.cpus().length;
@@ -59,24 +63,44 @@ module.exports = function setup(options, imports, register) {
         release = release.slice(1 + release.indexOf(':')).trim();
 
         var kernel = shell.exec('uname -r', {silent:true}).output || '';
+        kernel = kernel.slice(0, kernel.length - 1);
 
         return {codename: codename, release: release, kernel: kernel};
     }
 
     // REST Routes
-    http.get('/cpumem', function(req, res) {
+    express.get('/dash/cpumem', ensureAuth, function(req, res) {
         var stats = {cpus: cpuStats(), mem: memStats()};
         res.json(stats);
     });
 
-    http.get('/net/services', function(req, res) {
+    express.get('/dash/net-services', ensureAuth, function(req, res) {
         res.json(netStats());
     });
 
-    http.get('/os/platform', function(req, res) {
+    express.get('/dash/os-platform', ensureAuth, function(req, res) {
         res.json(platformStats());
     });
 
+    // Socket.io Routes
+    var dashboard_io = io
+        .of('/dash')
+        .on('connection', function (socket) {
+            
+            socket.on('cpumem', function (data) {
+                var stats = {cpus: cpuStats(), mem: memStats()};
+                socket.emit('cpumem', stats);
+            });
+
+            socket.on('net-services', function (data) {
+                socket.emit('net-services', netStats());
+            });
+
+            socket.on('os-platform', function (data) {
+                socket.emit('os-platform', platformStats());
+            });
+            
+      });
 
     register(null, {
         // "dashboard" is a service this plugin provides

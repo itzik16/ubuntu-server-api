@@ -3,14 +3,15 @@ module.exports = function setup(options, imports, register) {
     var express = require('express'),
         app = express(),
         http = require('http'),
+        connect = require('connect'),
         server = http.createServer(app),
-        //SQLiteStore = require('connect-sqlite')(express),
-        //pam = require('authenticate-pam'),
-        //io = require('socket.io').listen(server),
+        SQLiteStore = require('connect-sqlite3')(express),
+        io = require('socket.io').listen(server),
         util = require('util'),
-        crypto = require('crypto');
+        crypto = require('crypto'),
+        pam = require('authenticate-pam');
 
-    var port = options.port || 3000,
+    var port = options.port || 3030,
         host = options.host || "0.0.0.0";
 
     // Setup Random Session Secret
@@ -21,64 +22,143 @@ module.exports = function setup(options, imports, register) {
     // Todo: consider approaches that perserve
     // sessions across restarts. Maybe use keygrip
     // and store last x keys somewhere.
+    
     var sessionSecret;
     try {
         sessionSecret = crypto.randomBytes(24).toString('hex');
     } catch (ex) {
         console.log('error generating random session secret'); // Todo: integrate this with logging (winston)
     }
+    var cookieParser = express.cookieParser(sessionSecret);
+    var sessionStore = new SQLiteStore({db:'usgDB', dir:'db/'});
 
     // XSS Middleware
     // Notes: Experimenting with this approach
     // and other ways to increase security of
     // sensitive operations.
+    /*
     var xssHeader = function(req, res, next) {
         if(req.session !== undefined) {
             res.header('X-CSRF-Token', req.session._csrf ? req.session._csrf : '');
         }
         next();
     };
+    */
+
+    var allowCrossDomain = function(req, res, next) {
+        res.header('Access-Control-Allow-Credentials', true);
+        // obviously this technique isn't secure - need a better way of doing this
+        if(req.session !== undefined && req.session.origin !== undefined)
+            res.header('Access-Control-Allow-Origin', req.session.origin);
+        else
+            res.header('Access-Control-Allow-Origin', '*');
+
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+        next();
+    };
 
     // App Configuration
     app.configure(function() {
         app.use(express.bodyParser());
-        app.use(express.cookieParser());
-        /*
+        app.use(allowCrossDomain);
+        app.use(cookieParser);
         app.use(express.session({
-            store: new SQLiteStore({db:'usgDB', dir:'db/'}),
+            store: sessionStore,
             key:'usgagent.sid',
             secret: sessionSecret,
-            cookie: {maxAge:86400 * 7, secure: false, signed: true, httpOnly: true}
+            cookie: {maxAge:864000 * 7, secure: false, signed: true, httpOnly: false}
         }));
-        */
-        app.use(express.csrf());
+        //app.use(express.csrf());
     });
 
-    function ensureAuthenticated(req, res, next) {
-        if(req.session.authenticated !== undefined && req.session.authenticated === true) {
-            req.session.count = req.session.count ? (req.session.count + 1) : 1;
-
-            req.session.save(function(err) {
-                if(err) {
-                    console.log('error saving session'); // Todo: log this into an error log for support/debugging
+    // Socket.io Authorization
+    if(app.settings.env !== 'testing') {
+        io.configure(function () {
+            io.set('authorization', function (data, callback) {
+                if (data && data.headers && data.headers.cookie) {
+                    cookieParser(data, {}, function(err) {
+                        if(err) {
+                            return callback('COOKIE_PARSE_ERROR', false);
+                        }
+                        var sessionId = data.signedCookies['usgagent.sid'];
+                        sessionStore.get(sessionId, function(err, session){
+                            if(err || !session || !session.auth || !session.auth.loggedIn){
+                                console.log('not logged in');
+                                callback('NOT_LOGGED_IN', false);
+                            }
+                            else{
+                                data.session = session;
+                                callback(null, true);
+                            }
+                        });
+                    });
+                } else {
+                    return callback('MISSING_COOKIE', false);
                 }
             });
+        });
+    }
+
+    app.post('/authtoken', function(req, res) {
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        req.session.origin = req.headers.origin;
+        if(req.body.username !== undefined && req.body.password !== undefined) {
+            
+            pam.authenticate(req.body.username, req.body.password, function(err) {
+                if(err) {
+                    res.json(406, {"succes": false});
+                }
+                else {
+                    req.session.authenticated = true;
+                    req.session.save();
+                    res.json({"success": true});
+                }
+            });
+
+        } else {
+            res.json(400, {"success": false});
+        }
+    });
+
+    app.get('/status', function(req, res) {
+        res.json(200, {success: true});
+    });
+
+
+    io.sockets.on('connection', function (socket) {
+        socket.on('status', function (data) {
+            socket.emit('status', {success: true});
+        });
+
+    });
+
+    // Used for HATEOS authentication
+    function ensureAuth(req, res, next) {
+        if(app.settings.env === 'testing') {
+            return next();
+        }
+        if(req.session.authenticated !== undefined && req.session.authenticated === true) {
             return next();
         }
         else {
-            res.json({success:false, msg: 'Login required'}, 401);
+            res.json({success:false, msg: 'Login required', uri: '/authtoken'}, 401);
         }
     }
 
+
     server.listen(port, host, function (err) {
         if (err) return register(err);
-        console.log("HTTP server listening on http://%s%s/", options.host || "localhost", ":" + port);
+        console.log("HTTP server listening on http://%s%s/", host, ":" + port);
         register(null, {
             // When a plugin is unloaded, it's onDestruct function will be called if there is one.
             onDestruct: function (callback) {
                 server.close(callback);
             },
-            http: app
+            http: server,
+            socket_io: io,
+            express: app,
+            ensureAuth: ensureAuth
         });
     });
 
