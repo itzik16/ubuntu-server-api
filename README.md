@@ -1,7 +1,7 @@
 Ubuntu Server API
 =================
 
-HTTP friendly API (HATEOS or Websockets) for admining remote Ubuntu servers. Designed to support [Ubutuntu Server GUI](http://ubuntuservergui.com).
+HTTP friendly API (HATEOS or Websockets) for admining remote Ubuntu servers. Designed to support [Ubuntu Server GUI](http://ubuntuservergui.com).
 
 ### Status - Developer Preview
 Early version of the app I'm releasing to get developer feedback. It has the basic architecture in place and PAM authentication. For now I only recommend running it on local testing/development servers.
