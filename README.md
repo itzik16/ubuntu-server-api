@@ -14,6 +14,23 @@ Early version of the app I'm releasing to get developer feedback. It has the bas
 ### Install Notes
 - you may need to install [architect](https://github.com/c9/architect) and [connect-architect](https://github.com/c9/connect-architect) from their github repos to resolve the architect.log dependency
 
+### Additional steps for Ubuntu 12.04
+- You must update node to v0.8.12 for it to install the proper sqlite3 version.
+
+```
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+```
+- You also have to install the libpam0g-dev package.
+
+```
+sudo apt-get install libpam0g-dev
+```
+
+
+    
 ### Tests
 - written with [Mocha](http://visionmedia.github.com/mocha/) and [Should](https://github.com/visionmedia/should.js/)
 - run them from the root directory via `make test`
