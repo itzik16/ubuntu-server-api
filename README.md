@@ -18,8 +18,10 @@ Early version of the app I'm releasing to get developer feedback. It has the bas
 - You must update node to v0.8.12 for it to install the proper sqlite3 version.
 
 ```
-sudo npm install -g n
-sudo n 0.8.12
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
 ```
 - You also have to install the libpam0g-dev package.
 
