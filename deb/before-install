@@ -1,35 +1,32 @@
 #! /bin/bash
 
-echo -e "############################################"
-echo -e "## Preparing to install Ubuntu Server API ##"
-echo -e '############################################'
+echo "############################################"
+echo "## Preparing to install Ubuntu Server API ##"
+echo '############################################'
 
 # Add usg-api User
 /usr/sbin/adduser --system --disabled-login --disabled-password --no-create-home --group usg-api
 echo 'usg-api ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
-# Update System
-apt-get -y update
-
 # Required for adding PPAs
 apt-get install -y python-software-properties
 
 # Adding Nodejs PPA
-echo -e 'Adding nodejs PPA repo'
+echo 'Adding nodejs PPA repo'
 add-apt-repository -y ppa:richarvey/nodejs
 
 # Update System
 apt-get -y update
 
-echo -e '#############################################'
-echo -e '##        Installing NodeJS & NPM          ##'
-echo -e '#############################################'
+echo '#############################################'
+echo '##        Installing NodeJS & NPM          ##'
+echo '#############################################'
 
 apt-get -y install nodejs npm
 
-echo -e '###############################################'
-echo -e '##        Installing Ubuntu Server API       ##'
-echo -e '###############################################'
+echo '###############################################'
+echo '##        Installing Ubuntu Server API       ##'
+echo '###############################################'
 
 #npm install -g ubuntu-server-api
 npm install -g https://github.com/rawberg/ubuntu-server-api.git
