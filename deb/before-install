@@ -5,29 +5,29 @@ echo "## Preparing to install Ubuntu Server API ##"
 echo '############################################'
 
 # Add usg-api User
-/usr/sbin/adduser --system --disabled-login --disabled-password --no-create-home --group usg-api
+/usr/sbin/adduser --system --disabled-login --disabled-password --no-create-home --group usg-api;
 echo 'usg-api ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
 # Update System
-apt-get -y update
+apt-get -y update;
 
 # Required for adding PPAs
-&& apt-get install -y python-software-properties
+apt-get install -y python-software-properties;
 
 # Adding Nodejs PPA
-&& echo 'Adding nodejs PPA repo'
-&& add-apt-repository -y ppa:richarvey/nodejs
+echo 'Adding nodejs PPA repo'
+add-apt-repository -y ppa:richarvey/nodejs;
 
 # Update System
-&& apt-get -y update
+apt-get -y update;
 
-&& echo '#############################################'
+echo '#############################################'
 echo '##        Installing NodeJS & NPM          ##'
 echo '#############################################'
 
-apt-get -y install nodejs npm
+apt-get -y install nodejs npm;
 
-&& echo '###############################################'
+echo '###############################################'
 echo '##        Installing Ubuntu Server API       ##'
 echo '###############################################'
 
