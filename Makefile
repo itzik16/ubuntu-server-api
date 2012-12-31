@@ -2,9 +2,9 @@
 PKG_NAME = ubuntu-server-api
 PKG_VERSION = 0.6.0
 PKG_PREFIXPATH = /etc/init/
-PKG_BEFOREREMOVE = before-remove
-PKG_BEFOREINSTALL = before-install
-PKG_AFTERINSTALL = after-install
+PKG_BEFOREREMOVE = deb/before-remove
+PKG_BEFOREINSTALL = deb/before-install
+PKG_AFTERINSTALL = deb/after-install
 PKG_LICENSE = AGPL
 PKG_VENDOR = 'Ubuntu Server GUI'
 PKG_CATEGORY = admin
