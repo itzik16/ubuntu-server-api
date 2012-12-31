@@ -1,7 +1,7 @@
 #! /bin/bash
 
-echo -e "\n\n###########################################"
-echo -e "##      Starting Ubuntu Server API Service   ##"
-echo -e "###########################################\n\n"
+echo -e "#############################################"
+echo -e "##    Starting Ubuntu Server API Service   ##"
+echo -e "#############################################"
 
 service start ubuntu-server-api
