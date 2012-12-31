@@ -1,8 +1,8 @@
 #! /bin/bash
 
-echo -e '\n\n###########################################'
-echo -e '## Preparing to install Ubuntu Server API ##'
-echo -e '###########################################\n\n'
+echo -e "############################################"
+echo -e "## Preparing to install Ubuntu Server API ##"
+echo -e '############################################'
 
 # Add usg-api User
 /usr/sbin/adduser --system --disabled-login --disabled-password --no-create-home --group usg-api
@@ -21,14 +21,14 @@ add-apt-repository -y ppa:richarvey/nodejs
 # Update System
 apt-get -y update
 
-echo -e '\n\n###########################################'
+echo -e '#############################################'
 echo -e '##        Installing NodeJS & NPM          ##'
-echo -e '###########################################\n\n'
+echo -e '#############################################'
 
 apt-get -y install nodejs npm
 
-echo -e '\n\n###########################################'
+echo -e '###############################################'
 echo -e '##        Installing Ubuntu Server API       ##'
-echo -e '###########################################\n\n'
+echo -e '###############################################'
 #npm install -g ubuntu-server-api
-npm install -g
+npm install -g https://github.com/rawberg/ubuntu-server-api.git
