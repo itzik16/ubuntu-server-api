@@ -1,6 +1,6 @@
 {
     "author": "David Feinberg <david@ubuntuservergui.com>",
-    "name": "ubuntu-server-gui",
+    "name": "ubuntu-server-api",
     "description": "API to perform Ubuntu Server sys admin tasks via HATEOS or Websockets",
     "version": "0.6.0",
     "repository": {
@@ -9,7 +9,7 @@
     },
 
     "engines": {
-        "node": "~0.6.11"
+        "node": "~0.8.0"
     },
 
     "dependencies": {

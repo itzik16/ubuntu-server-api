@@ -19,7 +19,7 @@ Early version of the app I'm releasing to get developer feedback. It has the bas
 
 ```
 sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:chris-lea/node.js
+sudo add-apt-repository ppa:richarvey/nodejs
 sudo apt-get update
 sudo apt-get install nodejs
 ```

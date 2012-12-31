@@ -1,0 +1,5 @@
+#! /bin/bash
+
+echo 'Uninstalling Ubuntu Server API'
+service stop ubuntu-server-api
+npm uninstall -g ubuntu-server-api
