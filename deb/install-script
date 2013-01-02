@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Make sure add-apt-repository will work
+apt-get update
+apt-get install -y python-software-properties python-pycurl
+
+# Add Nodejs PPA
+echo 'Adding nodejs PPA repo'
+add-apt-repository -y ppa:richarvey/nodejs && apt-get update
+apt-get install -y nodejs npm
+
+apt-get install -y ubuntu-server-api

@@ -1,4 +1,12 @@
-#! /bin/bash
+#!/bin/bash
+set -e
+
+echo '###############################################'
+echo '##        Installing Ubuntu Server API       ##'
+echo '###############################################'
+
+# npm install -g ubuntu-server-api
+npm install -g https://github.com/rawberg/ubuntu-server-api.git
 
 echo "#############################################"
 echo "##    Starting Ubuntu Server API Service   ##"

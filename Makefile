@@ -17,6 +17,9 @@ package:
 	fpm -s dir -t deb \
 		-n $(PKG_NAME) \
 		-v $(PKG_VERSION) \
+		-d 'python-software-properties' \
+		-d 'nodejs > 0.8.0' \
+		-d 'npm > 1.0.0' \
 		--verbose \
 		--license $(PKG_LICENSE) \
 		--vendor $(PKG_VENDOR) \
