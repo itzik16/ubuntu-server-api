@@ -27,8 +27,8 @@ apt-get install -y build-essential python-software-properties python-pycurl
 echo 'Adding Node.js PPA repo'
 add-apt-repository -y ppa:richarvey/nodejs && apt-get update
 
-# Install latest versions of nodejs and npm
-apt-get install -y nodejs npm
+# Install latest versions of nodejs, npm and sqlite libs
+apt-get install -y nodejs npm libsqlite3 libsqlite3-dev
 
 # Install the latest version of ubuntu-server-gui
 npm install -g ubuntu-server-api
