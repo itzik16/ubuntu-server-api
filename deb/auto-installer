@@ -1,8 +1,27 @@
 #!/bin/bash
+#       __  __     ______     __  __     __   __     ______   __  __
+#      /\ \/\ \   /\  == \   /\ \/\ \   /\ "-.\ \   /\__  _\ /\ \/\ \
+#      \ \ \_\ \  \ \  __<   \ \ \_\ \  \ \ \-.  \  \/_/\ \/ \ \ \_\ \
+#       \ \_____\  \ \_____\  \ \_____\  \ \_\\"\_\    \ \_\  \ \_____\
+#        \/_____/   \/_____/   \/_____/   \/_/ \/_/     \/_/   \/_____/
+#
+#          ______     ______     ______     __   __   ______     ______
+#        /\  ___\   /\  ___\   /\  == \   /\ \ / /  /\  ___\   /\  == \
+#        \ \___  \  \ \  __\   \ \  __<   \ \ \'/   \ \  __\   \ \  __<
+#         \/\_____\  \ \_____\  \ \_\ \_\  \ \__|    \ \_____\  \ \_\ \_\
+#          \/_____/   \/_____/   \/_/ /_/   \/_/      \/_____/   \/_/ /_/
+#
+#                                 ______     ______   __
+#                                /\  __ \   /\  == \ /\ \
+#                                \ \  __ \  \ \  _-/ \ \ \
+#                                 \ \_\ \_\  \ \_\    \ \_\
+#                                  \/_/\/_/   \/_/     \/_/
 
-# Make sure we have required pckages for running add-apt-repository
+set -e
+
+# Requirements for building packages and running add-apt-repository
 apt-get update
-apt-get install -y python-software-properties python-pycurl
+apt-get install -y build-essential python-software-properties python-pycurl
 
 # Add Richard Harvey's PPA for the latest Node.js packages
 echo 'Adding Node.js PPA repo'
