@@ -1,20 +1,31 @@
 {
     "author": "David Feinberg <david@ubuntuservergui.com>",
     "name": "ubuntu-server-api",
-    "description": "API to perform Ubuntu Server sys admin tasks via HATEOS or Websockets",
+    "description": "API to perform Ubuntu Server admin tasks via HATEOS or Websockets",
+    "homepage": "http://ubuntuservergui.com",
     "version": "0.6.0",
     "repository": {
         "type": "git",
         "url": "git://github.com:rawberg/ubuntu-server-api.git"
     },
 
+    "bin": {
+        "ubuntu-server-api": "./server.js"
+    },
+
+    "bugs": {
+        "url": "https://github.com/rawberg/ubuntu-server-api/issues"
+    },
+
     "engines": {
         "node": "~0.8.0"
     },
 
+    "preferGlobal": true,
+
     "dependencies": {
         "architect": "0.1.x",
-        "connect": ">0.0.0",
+        "connect": "*",
         "express": "3.0.x",
         "socket.io": "0.9.x",
         "connect-sqlite3": ">=0.9.1",
@@ -22,9 +33,9 @@
     },
 
     "devDependencies": {
-        "mocha": ">0.0.0",
-        "should": ">0.0.0",
-        "socket.io-client": ">0.0.0",
+        "mocha": "*",
+        "should": "*",
+        "socket.io-client": "*",
         "request": "2.11.x"
     },
 
