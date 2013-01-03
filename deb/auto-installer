@@ -1,12 +1,16 @@
 #!/bin/bash
 
-# Make sure add-apt-repository will work
+# Make sure we have required pckages for running add-apt-repository
 apt-get update
 apt-get install -y python-software-properties python-pycurl
 
-# Add Nodejs PPA
-echo 'Adding nodejs PPA repo'
+# Add Richard Harvey's PPA for the latest Node.js packages
+echo 'Adding Node.js PPA repo'
 add-apt-repository -y ppa:richarvey/nodejs && apt-get update
+
+# Install latest versions of nodejs and npm
 apt-get install -y nodejs npm
 
-apt-get install -y ubuntu-server-api
+# Install the latest version of ubuntu-server-gui
+npm install -g ubuntu-server-api
+#apt-get install -y ubuntu-server-api
