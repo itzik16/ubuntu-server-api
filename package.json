@@ -24,6 +24,7 @@
     "preferGlobal": true,
 
     "dependencies": {
+        "node-gyp": "*",
         "authenticate-pam": "*",
         "architect": "0.1.x",
         "connect": "*",
