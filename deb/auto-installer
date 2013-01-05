@@ -19,17 +19,44 @@
 
 set -e
 
-# Requirements for building packages and running add-apt-repository
-apt-get update
-apt-get install -y build-essential python-software-properties python-pycurl
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Installing requirements for building packages and adding apt repos  #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
 
-# Add Richard Harvey's PPA for the latest Node.js packages
-echo 'Adding Node.js PPA repo'
+apt-get update
+apt-get install -y build-essential python-software-properties python-pycurl git
+
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Adding Richard Harvey's PPA for the latest Node.js packages         #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
+
 add-apt-repository -y ppa:richarvey/nodejs && apt-get update
 
-# Install latest versions of nodejs, npm and sqlite libs
-apt-get install -y nodejs nodejs-dev npm libsqlite3-0 libsqlite3-dev
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Installing the latest versions of nodejs, npm and related dev libs  #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
 
-# Install the latest version of ubuntu-server-gui
+apt-get install -y nodejs nodejs-dev npm libsqlite3-dev libpam0g-dev
+
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Installing the latest version of ubuntu-server-api                  #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
+
 npm install -g ubuntu-server-api
 #apt-get install -y ubuntu-server-api

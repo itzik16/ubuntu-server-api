@@ -24,12 +24,12 @@
     "preferGlobal": true,
 
     "dependencies": {
+        "authenticate-pam": "*",
         "architect": "0.1.x",
         "connect": "*",
         "express": "3.0.x",
-        "socket.io": "0.9.x",
-        "connect-sqlite3": ">=0.9.1",
-        "authenticate-pam": "git+https://github.com/RushPL/node-authenticate-pam.git"
+        "socket.io": ">=0.9.x",
+        "connect-sqlite3": ">=0.9.1"
     },
 
     "devDependencies": {
