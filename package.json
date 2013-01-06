@@ -13,6 +13,10 @@
         "ubuntu-server-api": "./server.js"
     },
 
+    "scripts": {
+        "postinstall": "mkdir db"
+    },
+
     "bugs": {
         "url": "https://github.com/rawberg/ubuntu-server-api/issues"
     },
