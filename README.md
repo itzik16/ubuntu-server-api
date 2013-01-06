@@ -6,31 +6,23 @@ HTTP friendly API (HATEOS or Websockets) for admining remote Ubuntu servers. Des
 ### Status - Developer Preview
 Early version of the app I'm releasing to get developer feedback. It has the basic architecture in place and PAM authentication. For now I only recommend running it on local testing/development servers.
 
+### Auto Install (recommended)
+    sudo curl -L get.ubuntuserverapi.com | sudo bash
+
+### Manual Install
+    sudo apt-get install -y build-essential python-software-properties python-pycurl
+    sudo add-apt-repository -y ppa:richarvey/nodejs && apt-get update
+    sudo apt-get install -y nodejs nodejs-dev npm libsqlite3-dev libpam0g-dev
+    sudo apt-get install -y ubuntu-server-api
+
 ### Install For Developers
     git clone git@github.com:rawberg/ubuntu-server-api.git ubuntu-server-api
     cd ubuntu-server-api
-    npm install
+    sudo npm install -g --unsafe-perm
 
 ### Install Notes
-- you may need to install [architect](https://github.com/c9/architect) and [connect-architect](https://github.com/c9/connect-architect) from their github repos to resolve the architect.log dependency
+currently tested with Ubuntu Server versions (11.04, 11.10, 12.04 and 12.10).
 
-### Additional steps for Ubuntu 12.04
-- You must update node to v0.8.12 for it to install the proper sqlite3 version.
-
-```
-sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:richarvey/nodejs
-sudo apt-get update
-sudo apt-get install nodejs
-```
-- You also have to install the libpam0g-dev package.
-
-```
-sudo apt-get install libpam0g-dev
-```
-
-
-    
 ### Tests
 - written with [Mocha](http://visionmedia.github.com/mocha/) and [Should](https://github.com/visionmedia/should.js/)
 - run them from the root directory via `make test`

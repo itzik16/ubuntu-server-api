@@ -30,7 +30,7 @@ module.exports = function setup(options, imports, register) {
         console.log('error generating random session secret'); // Todo: integrate this with logging (winston)
     }
     var cookieParser = express.cookieParser(sessionSecret);
-    var sessionStore = new SQLiteStore({db:'usgDB', dir:'db/'});
+    var sessionStore = new SQLiteStore({db:'usgDB', dir:'db'});
 
     // XSS Middleware
     // Notes: Experimenting with this approach

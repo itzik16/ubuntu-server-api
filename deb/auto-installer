@@ -28,7 +28,7 @@ echo -e "#######################################################################
 echo -e "\n"
 
 apt-get update
-apt-get install -y build-essential python-software-properties python-pycurl
+apt-get install -y build-essential python-software-properties python-pycurl git
 
 echo -e "\n"
 echo -e "########################################################################"
