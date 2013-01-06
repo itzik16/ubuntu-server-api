@@ -9,7 +9,8 @@ module.exports = function setup(options, imports, register) {
         io = require('socket.io').listen(server),
         util = require('util'),
         crypto = require('crypto'),
-        pam = require('authenticate-pam');
+        pam = require('authenticate-pam'),
+        path = require('path');
 
     var port = options.port || 3030,
         host = options.host || "0.0.0.0";
@@ -30,7 +31,8 @@ module.exports = function setup(options, imports, register) {
         console.log('error generating random session secret'); // Todo: integrate this with logging (winston)
     }
     var cookieParser = express.cookieParser(sessionSecret);
-    var sessionStore = new SQLiteStore({db:'usgDB', dir:'db'});
+    var localPath = path.dirname(require.main.filename);
+    var sessionStore = new SQLiteStore({db:'usgDB', dir: localPath + '/db'});
 
     // XSS Middleware
     // Notes: Experimenting with this approach
