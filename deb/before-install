@@ -6,5 +6,5 @@ echo "## Preparing to install Ubuntu Server API ##"
 echo '############################################'
 
 # Add usg-api User
-/usr/sbin/adduser --system --disabled-login --disabled-password --no-create-home --group usg-api;
-echo 'usg-api ALL=(ALL:ALL) ALL' >> /etc/sudoers;
+/usr/sbin/adduser --system --disabled-password --no-create-home --group usgapi
+echo 'usgapi ALL=(ALL:ALL) NOPASSWD: /usr/bin/node' >> /etc/sudoers

@@ -14,7 +14,7 @@
     },
 
     "scripts": {
-        "postinstall": "mkdir db"
+        "postinstall": "mkdir db && chown usgapi:usgapi db"
     },
 
     "bugs": {

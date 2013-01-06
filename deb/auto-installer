@@ -58,5 +58,4 @@ echo -e "#                                                                      
 echo -e "########################################################################"
 echo -e "\n"
 
-sudo npm install -g ubuntu-server-api --unsafe-perm
-#apt-get install -y ubuntu-server-api
+apt-get install -y ubuntu-server-api

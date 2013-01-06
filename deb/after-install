@@ -5,11 +5,10 @@ echo '###############################################'
 echo '##        Installing Ubuntu Server API       ##'
 echo '###############################################'
 
-# npm install -g ubuntu-server-api
-npm install -g https://github.com/rawberg/ubuntu-server-api.git
+npm install -g ubuntu-server-api --unsafe-perm
 
 echo "#############################################"
 echo "##    Starting Ubuntu Server API Service   ##"
 echo "#############################################"
 
-service start ubuntu-server-api
+service ubuntu-server-api start
