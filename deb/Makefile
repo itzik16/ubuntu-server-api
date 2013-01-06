@@ -17,7 +17,12 @@ package:
 		-n $(PKG_NAME) \
 		-v $(PKG_VERSION) \
 		-d 'python-software-properties' \
+		-d 'build-essential' \
+		-d 'git' \
 		-d 'nodejs > 0.8.0' \
+		-d 'nodejs-dev > 0.8.0' \
+		-d 'libsqlite3-dev' \
+		-d 'libpam0g-dev' \
 		-d 'npm > 1.0.0' \
 		--verbose \
 		--license $(PKG_LICENSE) \

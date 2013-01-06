@@ -1,9 +1,13 @@
 #!/bin/bash
 set -e
 
-echo "############################################"
-echo "## Preparing to install Ubuntu Server API ##"
-echo '############################################'
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Preparing to install Ubuntu Server API                              #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
 
 # Add usg-api User
 /usr/sbin/adduser --system --disabled-password --no-create-home --group usgapi

@@ -1,14 +1,22 @@
 #!/bin/bash
 set -e
 
-echo '###############################################'
-echo '##        Installing Ubuntu Server API       ##'
-echo '###############################################'
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Installing Ubuntu Server API                                        #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
 
 npm install -g ubuntu-server-api --unsafe-perm
 
-echo "#############################################"
-echo "##    Starting Ubuntu Server API Service   ##"
-echo "#############################################"
+echo -e "\n"
+echo -e "########################################################################"
+echo -e "#                                                                      #"
+echo -e "#  Starting Ubuntu Server API Service                                  #"
+echo -e "#                                                                      #"
+echo -e "########################################################################"
+echo -e "\n"
 
 service ubuntu-server-api start
