@@ -28,7 +28,7 @@ echo -e "#######################################################################
 echo -e "\n"
 
 apt-get update
-apt-get install -y build-essential python-software-properties python-pycurl git
+apt-get install -y build-essential python-software-properties python-pycurl
 
 echo -e "\n"
 echo -e "########################################################################"
@@ -58,5 +58,5 @@ echo -e "#                                                                      
 echo -e "########################################################################"
 echo -e "\n"
 
-npm install -g ubuntu-server-api
+sudo npm install -g ubuntu-server-api --unsafe-perm
 #apt-get install -y ubuntu-server-api
