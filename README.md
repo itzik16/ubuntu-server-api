@@ -7,12 +7,15 @@ HTTP friendly API (HATEOS or Websockets) for admining remote Ubuntu servers. Des
 Early version of the app I'm releasing to get developer feedback. It has the basic architecture in place and PAM authentication. For now I only recommend running it on local testing/development servers.
 
 ### Auto Install (recommended)
-    sudo curl -L get.ubuntuserverapi.com | sudo bash
+    curl -L get.ubuntuserverapi.com | sudo bash
 
 ### Manual Install
     sudo apt-get install -y build-essential python-software-properties python-pycurl
-    sudo add-apt-repository -y ppa:richarvey/nodejs && apt-get update
+    sudo add-apt-repository -y ppa:richarvey/nodejs && sudo apt-get update
     sudo apt-get install -y nodejs nodejs-dev npm libsqlite3-dev libpam0g-dev
+
+    curl https://apt-ubuntu-server-api.s3-us-west-1.amazonaws.com/apt.ubuntu-server-api.key | sudo apt-key add -
+    sudo add-apt-repository -y https://apt-ubuntu-server-api.s3-us-west-1.amazonaws.com && sudo apt-get update
     sudo apt-get install -y ubuntu-server-api
 
 ### Install For Developers
