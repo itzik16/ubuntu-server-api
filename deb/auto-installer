@@ -58,4 +58,6 @@ echo -e "#                                                                      
 echo -e "########################################################################"
 echo -e "\n"
 
+curl https://apt-ubuntu-server-api.s3-us-west-1.amazonaws.com/apt.ubuntu-server-api.key | sudo apt-key add -
+add-apt-repository -y https://apt-ubuntu-server-api.s3-us-west-1.amazonaws.com && apt-get update
 apt-get install -y ubuntu-server-api
