@@ -9,6 +9,10 @@ echo -e "#                                                                      
 echo -e "########################################################################"
 echo -e "\n"
 
+if [ ! -d "db" ]; then
+    mkdir db
+fi
+
 if [ ! -d ".ssl" ]; then
     mkdir .ssl
     mkdir .ssl/private

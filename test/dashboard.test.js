@@ -9,7 +9,8 @@ var should = require('should'),
       'reconnect': false,
       'max reconnection attempts': 1,
       'try multiple transports': false,
-      'force new connection': true
+      'force new connection': true,
+      'secure': true
     };
 
 describe('dashboard plugin tests via websocket\n', function() {
@@ -35,7 +36,7 @@ describe('dashboard plugin tests via websocket\n', function() {
     });
 
     it('should return valid CPU and memory data', function(done) {
-        var dashboard = this.dashboard = io.connect('http://127.0.0.1:3030/dash', ioConfig);
+        var dashboard = this.dashboard = io.connect('https://127.0.0.1:8890/dash', ioConfig);
         dashboard.on('connect', function() {
             dashboard.emit('cpumem');
             dashboard.on('cpumem', function(data) {
@@ -49,7 +50,7 @@ describe('dashboard plugin tests via websocket\n', function() {
     });
 
     it('should return valid net services data', function(done) {
-        var netStats = this.netStats = io.connect('http://127.0.0.1:3030/dash', ioConfig);
+        var netStats = this.netStats = io.connect('https://127.0.0.1:8890/dash', ioConfig);
         netStats.on('connect', function() {
             netStats.emit('net-services');
             netStats.on('net-services', function(data) {
@@ -63,7 +64,7 @@ describe('dashboard plugin tests via websocket\n', function() {
     });
 
     it('should return valid os platform data', function(done) {
-        var platform = this.platform = io.connect('http://127.0.0.1:3030/dash', ioConfig);
+        var platform = this.platform = io.connect('https://127.0.0.1:8890/dash', ioConfig);
         platform.on('connect', function() {
             platform.emit('os-platform');
             platform.on('os-platform', function(data) {
@@ -100,7 +101,7 @@ describe('dashboard plugin tests via HATEOS\n', function() {
     });
 
     it('should return valid CPU and memory data', function(done) {
-        request.get('http://127.0.0.1:3030/dash/cpumem', function (error, response, data) {
+        request.get('https://127.0.0.1:8890/dash/cpumem', function (error, response, data) {
             data = JSON.parse(data);
             should.not.exist(error);
             (response.statusCode).should.equal(200);
@@ -112,7 +113,7 @@ describe('dashboard plugin tests via HATEOS\n', function() {
     });
 
     it('should return valid net services data', function(done) {
-        request.get('http://127.0.0.1:3030/dash/net-services', function (error, response, data) {
+        request.get('https://127.0.0.1:8890/dash/net-services', function (error, response, data) {
             data = JSON.parse(data);
             should.not.exist(error);
             (response.statusCode).should.equal(200);
@@ -124,7 +125,7 @@ describe('dashboard plugin tests via HATEOS\n', function() {
     });
 
     it('should return valid os platform data', function(done) {
-        request.get('http://127.0.0.1:3030/dash/os-platform', function (error, response, data) {
+        request.get('https://127.0.0.1:8890/dash/os-platform', function (error, response, data) {
             data = JSON.parse(data);
             should.not.exist(error);
             (response.statusCode).should.equal(200);

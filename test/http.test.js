@@ -10,7 +10,8 @@ var should = require('should'),
         'reconnect': false,
         'max reconnection attempts': 1,
         'try multiple transports': false,
-        'force new connection': true
+        'force new connection': true,
+        'secure': true
     };
 
 describe('http plugin tests\n', function() {
@@ -32,10 +33,10 @@ describe('http plugin tests\n', function() {
             });
             this.testServerTwo.kill();
         });
-        
+
 
         it('status websocket endpoint should return a "handshake error" error message when hit without passing a cookie', function(done) {
-            var ws = this.ws = io.connect('http://127.0.0.1:3030', ioConfig);
+            var ws = this.ws = io.connect('https://127.0.0.1:8890', ioConfig);
 
             ws.on('error', function(errMsg) {
                 should.exist(errMsg);
@@ -47,7 +48,7 @@ describe('http plugin tests\n', function() {
     });
 
     describe('core websocket endpoints\n', function() {
-        
+
         before(function(done) {
             this.testServerOne = fork('./server.js', [], {silent: false, env: {NODE_ENV: 'testing'}});
             this.testServerOne.on('message', function (msg) {
@@ -56,7 +57,7 @@ describe('http plugin tests\n', function() {
                 }
             });
         });
-        
+
 
         after(function(done) {
             this.ws.disconnect();
@@ -68,7 +69,7 @@ describe('http plugin tests\n', function() {
         });
 
         it('status websocket endpoint returns "ok"', function(done) {
-            var ws = this.ws = io.connect('http://127.0.0.1:3030', ioConfig);
+            var ws = this.ws = io.connect('https://127.0.0.1:8890', ioConfig);
 
             ws.on('connect', function() {
                 ws.emit('status');
@@ -84,8 +85,8 @@ describe('http plugin tests\n', function() {
 
     // Notes: was going to create a new user then test
     // auth on that. But that approach also required root.
-    // Remove the x and replace password placeholder to enable test.
-    describe('user authentication via PAM\n', function() {
+    // Remove the x and replace username/password to enable test.
+    xdescribe('user authentication via PAM\n', function() {
         before(function(done) {
             this.testServer = fork('./server.js', [], {silent: false, env: {NODE_ENV: 'development'}});
             this.testServer.on('message', function (msg) {
@@ -94,7 +95,7 @@ describe('http plugin tests\n', function() {
                 }
             });
         });
-        
+
         after(function(done) {
             this.testServer.on('disconnect', function() {
                 done();
@@ -105,8 +106,8 @@ describe('http plugin tests\n', function() {
 
         it('authenticate root user and return session id', function(done) {
             request.post({
-                url: 'http://127.0.0.1:3030/authtoken',
-                form: {username: 'david', password: 'devbox99'}
+                url: 'https://127.0.0.1:8890/authtoken',
+                form: {username: 'your-username', password: 'your-password'}
             },
             function (error, response, body) {
                 should.not.exist(error);

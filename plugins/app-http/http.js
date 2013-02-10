@@ -2,18 +2,19 @@ module.exports = function setup(options, imports, register) {
 
     var express = require('express'),
         app = express(),
-        http = require('http'),
+        https = require('https'),
         connect = require('connect'),
         SQLiteStore = require('connect-sqlite3')(express),
         util = require('util'),
         crypto = require('crypto'),
+        fs = require('fs'),
         pam = require('authenticate-pam'),
         path = require('path');
 
-    options.port || 8890;
-    options.host || "0.0.0.0";
-    options.key = fs.readFileSync('./ssl/private/usg-key.pem').toString();
-    options.cert = fs.readFileSync('./ssl/certs/usg-cert.pem').toString();
+    options.port = options.port ? options.port : 8890;
+    options.host = options.host ? options.host : "0.0.0.0";
+    options.key = fs.readFileSync('.ssl/private/usg-key.pem').toString();
+    options.cert = fs.readFileSync('.ssl/certs/usg-cert.pem').toString();
 
 
     var server = https.createServer(options, app),
@@ -27,7 +28,7 @@ module.exports = function setup(options, imports, register) {
     // TODO: consider approaches that perserve
     // sessions across restarts. Maybe use keygrip
     // and store last x keys somewhere.
-    
+
     var sessionSecret;
     try {
         sessionSecret = crypto.randomBytes(24).toString('hex');
@@ -110,7 +111,7 @@ module.exports = function setup(options, imports, register) {
         res.header('Access-Control-Allow-Origin', req.headers.origin);
         req.session.origin = req.headers.origin;
         if(req.body.username !== undefined && req.body.password !== undefined) {
-            
+
             pam.authenticate(req.body.username, req.body.password, function(err) {
                 if(err) {
                     res.json(406, {"succes": false});
@@ -155,7 +156,7 @@ module.exports = function setup(options, imports, register) {
 
     server.listen(options.port, options.host, function (err) {
         if (err) return register(err);
-        console.log("HTTP server listening on http://%s%s/", options.host, ":" + options.port);
+        console.log("HTTP server listening on https://%s%s/", options.host, ":" + options.port);
         register(null, {
             // When a plugin is unloaded, it's onDestruct function will be called if there is one.
             onDestruct: function (callback) {
