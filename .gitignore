@@ -5,7 +5,7 @@ bin-release/
 db/*.db
 node_modules/
 npm-debug.log
-
+.ssl/*
 .DS_Store
 lib-cov
 *.seed

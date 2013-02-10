@@ -4,23 +4,27 @@ module.exports = function setup(options, imports, register) {
         app = express(),
         http = require('http'),
         connect = require('connect'),
-        server = http.createServer(app),
         SQLiteStore = require('connect-sqlite3')(express),
-        io = require('socket.io').listen(server),
         util = require('util'),
         crypto = require('crypto'),
         pam = require('authenticate-pam'),
         path = require('path');
 
-    var port = options.port || 3030,
-        host = options.host || "0.0.0.0";
+    options.port || 8890;
+    options.host || "0.0.0.0";
+    options.key = fs.readFileSync('./ssl/private/usg-key.pem').toString();
+    options.cert = fs.readFileSync('./ssl/certs/usg-cert.pem').toString();
+
+
+    var server = https.createServer(options, app),
+        io = require('socket.io').listen(server);
 
     // Setup Random Session Secret
     // Notes: with this approach each time
     // the agent/node app is restarted all
     // sessions will become invalid.
     //
-    // Todo: consider approaches that perserve
+    // TODO: consider approaches that perserve
     // sessions across restarts. Maybe use keygrip
     // and store last x keys somewhere.
     
@@ -69,7 +73,7 @@ module.exports = function setup(options, imports, register) {
             store: sessionStore,
             key:'usgagent.sid',
             secret: sessionSecret,
-            cookie: {maxAge:864000 * 7, secure: false, signed: true, httpOnly: false}
+            cookie: {maxAge:864000 * 7, secure: true, signed: true, httpOnly: true}
         }));
         //app.use(express.csrf());
     });
@@ -149,9 +153,9 @@ module.exports = function setup(options, imports, register) {
     }
 
 
-    server.listen(port, host, function (err) {
+    server.listen(options.port, options.host, function (err) {
         if (err) return register(err);
-        console.log("HTTP server listening on http://%s%s/", host, ":" + port);
+        console.log("HTTP server listening on http://%s%s/", options.host, ":" + options.port);
         register(null, {
             // When a plugin is unloaded, it's onDestruct function will be called if there is one.
             onDestruct: function (callback) {
