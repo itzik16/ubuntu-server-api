@@ -19,7 +19,7 @@ Early version of the app I'm releasing to get developer feedback. It has the bas
     sudo apt-get install -y ubuntu-server-api
 
 ### Install For Developers
-    git clone git@github.com:rawberg/ubuntu-server-api.git ubuntu-server-api
+    git clone git://github.com/rawberg/ubuntu-server-api.git ubuntu-server-api
     cd ubuntu-server-api
     sudo npm install -g --unsafe-perm
 
