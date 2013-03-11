@@ -2,7 +2,7 @@ module.exports = function setup(options, imports, register) {
 
     var express = require('express'),
         app = express(),
-        https = require('https'),
+        http = require('http'),
         connect = require('connect'),
         SQLiteStore = require('connect-sqlite3')(express),
         util = require('util'),
@@ -12,12 +12,9 @@ module.exports = function setup(options, imports, register) {
         path = require('path');
 
     options.port = options.port ? options.port : 8890;
-    options.host = options.host ? options.host : "0.0.0.0";
-    options.key = fs.readFileSync('.ssl/private/usg-key.pem').toString();
-    options.cert = fs.readFileSync('.ssl/certs/usg-cert.pem').toString();
+    options.host = options.host ? options.host : "127.0.0.1";
 
-
-    var server = https.createServer(options, app),
+    var server = http.createServer(app),
         io = require('socket.io').listen(server);
 
     // Setup Random Session Secret
@@ -25,7 +22,7 @@ module.exports = function setup(options, imports, register) {
     // the agent/node app is restarted all
     // sessions will become invalid.
     //
-    // TODO: consider approaches that perserve
+    // TODO: consider approaches that preserve
     // sessions across restarts. Maybe use keygrip
     // and store last x keys somewhere.
 
@@ -58,7 +55,7 @@ module.exports = function setup(options, imports, register) {
         if(req.session !== undefined && req.session.origin !== undefined)
             res.header('Access-Control-Allow-Origin', req.session.origin);
         else
-            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Origin', req.headers.origin);  // temporary, moving away from cookie sessions soon
 
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
@@ -79,9 +76,14 @@ module.exports = function setup(options, imports, register) {
         //app.use(express.csrf());
     });
 
-    // Socket.io Authorization
-    if(app.settings.env !== 'testing') {
-        io.configure(function () {
+    io.configure(function () {
+        io.set('log level', 1);
+        io.set('browser client cache', false);
+        io.set('resource', '/usg');
+
+        if(app.settings.env !== 'testing') {
+            // TODO: Use auth tokens instead of relying on cookies
+            /*
             io.set('authorization', function (data, callback) {
                 if (data && data.headers && data.headers.cookie) {
                     cookieParser(data, {}, function(err) {
@@ -104,8 +106,10 @@ module.exports = function setup(options, imports, register) {
                     return callback('MISSING_COOKIE', false);
                 }
             });
-        });
-    }
+            */
+        }
+    });
+
 
     app.post('/authtoken', function(req, res) {
         res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -137,7 +141,6 @@ module.exports = function setup(options, imports, register) {
         socket.on('status', function (data) {
             socket.emit('status', {success: true});
         });
-
     });
 
     // Used for HATEOS authentication
@@ -156,7 +159,7 @@ module.exports = function setup(options, imports, register) {
 
     server.listen(options.port, options.host, function (err) {
         if (err) return register(err);
-        console.log("HTTP server listening on https://%s%s/", options.host, ":" + options.port);
+        console.log("Ubuntu Server API listening on http://%s%s/", options.host, ":" + options.port);
         register(null, {
             // When a plugin is unloaded, it's onDestruct function will be called if there is one.
             onDestruct: function (callback) {

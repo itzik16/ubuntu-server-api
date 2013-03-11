@@ -7,16 +7,17 @@ var should = require('should'),
 
     var ioConfig = {
         'transports': ['websocket'],
+        'resource': 'usg',
         'reconnect': false,
         'max reconnection attempts': 1,
         'try multiple transports': false,
         'force new connection': true,
-        'secure': true
+        'secure': false
     };
 
 describe('http plugin tests\n', function() {
 
-    describe('websocket server with authorization enabled', function() {
+    xdescribe('websocket server with authorization enabled', function() {
         before(function(done) {
             this.testServerTwo = fork('./server.js', [], {silent: false, env: {NODE_ENV: 'development'}});
             this.testServerTwo.on('message', function (msg) {
@@ -36,7 +37,7 @@ describe('http plugin tests\n', function() {
 
 
         it('status websocket endpoint should return a "handshake error" error message when hit without passing a cookie', function(done) {
-            var ws = this.ws = io.connect('https://127.0.0.1:8890', ioConfig);
+            var ws = this.ws = io.connect('http://127.0.0.1:8890/usg', ioConfig);
 
             ws.on('error', function(errMsg) {
                 should.exist(errMsg);
@@ -69,7 +70,7 @@ describe('http plugin tests\n', function() {
         });
 
         it('status websocket endpoint returns "ok"', function(done) {
-            var ws = this.ws = io.connect('https://127.0.0.1:8890', ioConfig);
+            var ws = this.ws = io.connect('http://127.0.0.1:8890', ioConfig);
 
             ws.on('connect', function() {
                 ws.emit('status');
@@ -106,7 +107,7 @@ describe('http plugin tests\n', function() {
 
         it('authenticate root user and return session id', function(done) {
             request.post({
-                url: 'https://127.0.0.1:8890/authtoken',
+                url: 'http://127.0.0.1:8890/authtoken',
                 form: {username: 'your-username', password: 'your-password'}
             },
             function (error, response, body) {

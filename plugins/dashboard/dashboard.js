@@ -68,20 +68,6 @@ module.exports = function setup(options, imports, register) {
         return {codename: codename, release: release, kernel: kernel};
     }
 
-    // REST Routes
-    express.get('/dash/cpumem', ensureAuth, function(req, res) {
-        var stats = {cpus: cpuStats(), mem: memStats()};
-        res.json(stats);
-    });
-
-    express.get('/dash/net-services', ensureAuth, function(req, res) {
-        res.json(netStats());
-    });
-
-    express.get('/dash/os-platform', ensureAuth, function(req, res) {
-        res.json(platformStats());
-    });
-
     // Socket.io Routes
     var dashboard_io = io
         .of('/dash')
